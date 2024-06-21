@@ -31,4 +31,41 @@ class UsersController extends Controller
             'microposts' => $microposts
         ]);
     }
+    
+    /**
+     * ユーザーのフォロー一覧ページを表示するアクション。
+     *
+     */
+    public function followings($id) 
+    {
+        $user = User::findOrFail($id);
+        
+        // 関係するモデルの件数をロード
+        $user->loadRelationshipCounts();
+        
+        $followings = $user->followings()->paginate(10);
+        
+        return view('users.followings', [
+            'user' => $user,
+            'users' => $followings,
+        ]);
+    }
+    
+    /**
+     * ユーザーのフォロワー一覧ページを表示するアクション。
+     *
+     */
+    public function followers($id) 
+    {
+        $user = User::findOrFail($id);
+        
+        $user->loadRelationshipCounts();
+        
+        $followers = $user->followers()->paginate(10);
+        
+        return view('users.followers', [
+            'user' => $user,
+            'users' => $followers,
+        ]);
+    }
 }
