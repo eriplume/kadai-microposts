@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('unfollow', [UserFollowController::class, 'destroy'])->name('user.unfollow');
         Route::get('followings', [UsersController::class, 'followings'])->name('users.followings');
         Route::get('followers', [UsersController::class, 'followers'])->name('users.followers');
+        Route::get('favorites', [UsersController::class, 'favorites'])->name('users.favorites');
     });
     Route::resource('users', UsersController::class, ['only' => ['index', 'show']]);
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

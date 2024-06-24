@@ -24,7 +24,7 @@ class UsersController extends Controller
         
         $user->loadRelationshipCounts();
         
-        $microposts = $user->microposts()->orderBy('creates_at', 'desc')->paginate(10);
+        $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
         
         return view('users.show', [
             'user' => $user,
@@ -67,5 +67,20 @@ class UsersController extends Controller
             'user' => $user,
             'users' => $followers,
         ]);
+    }
+    
+    public function favorites($id)
+    {
+        $user = User::findOrFail($id);
+        
+        $user->loadRelationshipCounts();
+        
+        $favorites = $user->favorites()->paginate(10);
+        
+        return view('users.favorites', [
+            'user' => $user,
+            'microposts' => $favorites,
+        ]);
+        
     }
 }
