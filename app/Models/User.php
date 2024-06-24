@@ -54,7 +54,7 @@ class User extends Authenticatable
      */
     public function loadRelationshipCounts() 
     { 
-        $this->loadCount(['microposts', 'followings', 'followers']);   
+        $this->loadCount(['microposts', 'followings', 'followers', 'favorites']);   
     }
     
      /**
@@ -133,5 +133,10 @@ class User extends Authenticatable
         
         //user_idカラムが $userIds配列の値と一致するものを絞り込む
         return Micropost::whereIn('user_id', $userIds);
+    }
+    
+    public function favorites()
+    {
+        return $this->belongsToMany(Micropost::class, 'favorites', 'user_id', 'micropost_id')->withTimestamps();    
     }
 }
